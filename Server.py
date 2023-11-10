@@ -7,6 +7,7 @@ import asyncio
 from config.database.DB import init_db
 from config.Config import getSettings
 from routes.user.router import userRouter
+from routes.capacitacao.router import capacitacaoRouter
 
 settings = getSettings()
 
@@ -25,6 +26,8 @@ app.add_middleware(
 #init_db(app)
 
 app.include_router(userRouter)
+app.include_router(capacitacaoRouter)
+
 config = Config()
 config.bind = [f'127.0.0.1:{settings.APP_PORT}']
 
