@@ -6,7 +6,7 @@ class User(Model):
     name = fields.CharField(max_length=300)
     email = fields.CharField(max_length=300)
     password = fields.CharField(max_length=300)
-    created_at = fields.DatetimeField(defaut=datetime.now())
+    created_at = fields.DatetimeField(defaut=datetime.now(), auto_now_add=True)
 
     class Meta:
         ordering=["name"]

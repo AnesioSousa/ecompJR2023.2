@@ -7,7 +7,7 @@ from models.user.UserModel import User
 capacitacaoRouter = APIRouter()
 
 @capacitacaoRouter.post('/api/v1/criar-usuario', response_description="Create user and returns the resource")
-async def createUser(request: Request, user: User) -> JSONResponse:
+async def createUser(request: Request) -> JSONResponse:
     #Usuário pode ser pego direto ou através do body da Request do modo na linha abaixo
     #user = await request.json()
     

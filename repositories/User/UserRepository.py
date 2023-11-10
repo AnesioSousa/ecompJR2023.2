@@ -1,4 +1,5 @@
 from tortoise.contrib.pydantic import pydantic_model_creator
+from dtos.user.userDTO import UserDTO
 from models.user.UserModel import User
 from tortoise import Tortoise
 
@@ -12,15 +13,17 @@ class UserRepository:
         result = await self.__model_creator.from_tortoise_orm(user)
         return result.model_dump()
 
-    async def create(self, user: dict) -> User:
-        return await self.__entity.create(**user)
+    async def create(self, user: dict) -> UserDTO:
+        newUser = await self.__entity.create(**user) 
+        return UserDTO.model_validate(await self.to_dict(newUser))
     
-    async def update(self, user: User) -> User:
+    async def update(self, user: User) -> UserDTO:
         await user.save()
-        return user
+        return UserDTO.model_validate(await self.to_dict(user))
 
-    async def get_one(self, id: int) -> User:
-        return await self.__entity.get_or_none(id=id)
+    async def get_one(self, id: int) -> UserDTO:
+        user = await self.__entity.get_or_none(id=id)
+        return UserDTO.model_validate(await self.to_dict(user))
     
     async def get_all(self) -> list[User]:
         return await self.__entity.all()

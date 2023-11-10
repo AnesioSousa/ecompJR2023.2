@@ -1,4 +1,5 @@
 from fastapi import Response, Request, HTTPException
+from dtos.user.userDTO import UserDTO
 from models.user.UserModel import User
 from repositories.User.UserRepository import UserRepository
 
@@ -8,21 +9,22 @@ class UserController():
     def __init__(self) -> None:
         self.__repository = UserRepository()
 
-    async def create(self, user: dict) -> User:
+    async def create(self, user: dict[str, any]) -> UserDTO:
         try:
             new_user = await self.__repository.create(user)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
         return new_user
 
-    async def getOne(self, id: int) -> User:
+    async def getOne(self, id: int) -> UserDTO:
         user = await self.__repository.get_one(id=id)
         return user    
+        
     async def getAll(self) -> list[User]:
         users = await self.getAll()
         return users
     
-    async def update(self, user: dict) -> User:
+    async def update(self, user: dict[str, any]) -> UserDTO:
         searched_user = None
         try:
             searched_user = await self.__repository.get_one(id=user['id'])
