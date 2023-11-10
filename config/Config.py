@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     GENERATE_SCHEMAS: bool = config("GENERATE_SCHEMAS", default=False)
     MODELS: list = [
         "models.user.UserModel",
+        "aerich.models"
     ]
 
 @lru_cache

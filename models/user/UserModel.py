@@ -1,6 +1,13 @@
-from pydantic import BaseModel, EmailStr
+from tortoise import Model, fields
+from datetime import datetime
 
-class User(BaseModel):
-    name: str
-    email: EmailStr
-    password: str
+class User(Model):
+    id = fields.IntField(pk=True, index=True)
+    name = fields.CharField(max_length=300)
+    email = fields.CharField(max_length=300)
+    password = fields.CharField(max_length=300)
+    created_at = fields.DatetimeField(defaut=datetime.now())
+
+    class Meta:
+        ordering=["name"]
+    
