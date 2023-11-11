@@ -3,6 +3,7 @@ from hypercorn.config import Config
 from hypercorn.asyncio import serve
 from fastapi import FastAPI
 import asyncio
+import logging
 
 from config.database.DB import init_db
 from config.Config import getSettings
@@ -28,6 +29,13 @@ app.include_router(userRouter)
 
 config = Config()
 config.bind = [f'127.0.0.1:{settings.APP_PORT}']
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("hypercorn")
+logger.setLevel(logging.INFO)
+config.accesslog = logger
+
+config.use_reloader = True
 
 asyncio.run(serve(app, config))
 

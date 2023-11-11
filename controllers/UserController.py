@@ -17,17 +17,17 @@ class UserController():
         return new_user
 
     async def getOne(self, id: int) -> UserDTO:
-        user = await self.__repository.get_one(id=id)
+        user = await self.__repository.getOne(id=id)
         return user    
         
-    async def getAll(self) -> list[User]:
-        users = await self.getAll()
+    async def getAll(self) -> list[UserDTO]:
+        users = await self.__repository.getAll()
         return users
     
     async def update(self, user: dict[str, any]) -> UserDTO:
         searched_user = None
         try:
-            searched_user = await self.__repository.get_one(id=user['id'])
+            searched_user = await self.__repository.getOne(id=user['id'])
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
         
@@ -44,15 +44,10 @@ class UserController():
         
 
     async def delete(self, id: int) -> bool:
-        searched_user = None
         try:
-            searched_user = await self.__repository.get_one(id=id)
+            deleted = await self.__repository.delete(id)                     
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
         
-        try:
-            if searched_user:
-                return await self.__repository.delete(searched_user)
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
-        return False
+        if not deleted:
+            raise HTTPException(status_code=404, detail="Not possible to find the resource.")
