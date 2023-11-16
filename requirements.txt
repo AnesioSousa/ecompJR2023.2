@@ -1,0 +1,6 @@
+hypercorn
+fastapi
+tortoise-orm
+pydantic_settings
+python-decouple
+email-validator
