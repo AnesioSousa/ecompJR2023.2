@@ -8,7 +8,7 @@ import logging
 from config.database.DB import init_db
 from config.Config import getSettings
 from routes.user.router import userRouter
-
+from routes.form.router import formRouter
 settings = getSettings()
 
 app = FastAPI(
@@ -26,8 +26,10 @@ app.add_middleware(
 init_db(app)
 
 app.include_router(userRouter)
+app.include_router(formRouter)
 
 config = Config()
+
 config.bind = [f'127.0.0.1:{settings.APP_PORT}']
 
 logging.basicConfig(level=logging.INFO)

@@ -4,11 +4,11 @@ from dtos.form.formDTO import FormDTO
 from tortoise import Tortoise
 
 
-class FormRepository():
+class FormRepository:
     def __init__(self):
         self.__entity = Form
         self.__model_creator = pydantic_model_creator(Form)
-        self.__tortoise = Tortoise.get_connection('default')
+        #self.__tortoise = Tortoise.get_connection('default')
         
     async def create(self, form: dict) -> FormDTO:
         newForm = await self.__entity.create(**form) 

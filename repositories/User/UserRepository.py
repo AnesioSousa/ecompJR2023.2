@@ -7,7 +7,7 @@ class UserRepository:
     def __init__(self):
         self.__entity = User
         self.__model_creator = pydantic_model_creator(User)
-        self.__tortoise = Tortoise.get_connection('default')
+        #self.__tortoise = Tortoise.get_connection('default')
 
     async def toDict(self, user: User) -> dict:
         result = await self.__model_creator.from_tortoise_orm(user)
