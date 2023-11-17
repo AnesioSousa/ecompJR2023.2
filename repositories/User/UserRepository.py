@@ -45,5 +45,5 @@ class UserRepository:
             return True
         return False
     
-    # async def execute_sql(self, query: str) -> list[dict]:
-    #     return await self.__tortoise.execute_query_dict(query)
+    async def execute_sql(self, query: str) -> list[dict]:
+        return await self.__tortoise.execute_query_dict(query)
