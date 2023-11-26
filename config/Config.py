@@ -1,7 +1,11 @@
 from pydantic_settings import BaseSettings
 from decouple import config
 from functools import lru_cache
-
+"""
+        
+        "services.models.user.UserModel",
+        "services.models.token.TokenModel"
+"""
 
 class Settings(BaseSettings):
     APP_VERSION: str = config("APP_VERSION", default="1")
@@ -12,7 +16,6 @@ class Settings(BaseSettings):
     ORIGINS: list = ["*"]
     GENERATE_SCHEMAS: bool = config("GENERATE_SCHEMAS", default=False)
     MODELS: list = [
-        "models.user.UserModel",
         "models.form.FormModel",
         "aerich.models"
     ]
