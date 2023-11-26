@@ -8,6 +8,13 @@ class UserController():
 
     def __init__(self) -> None:
         self.__repository = UserRepository()
+        
+    async def getByUsername(self, name:str):
+        try:
+            user = await self.__repository.getMany("username",name)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
+        return user
 
     async def create(self, user: dict[str, any]) -> UserDTO:
         try:
@@ -16,8 +23,11 @@ class UserController():
             raise HTTPException(status_code=500, detail=f"An error was ocurred: {str(e)}")
         return new_user
 
-    async def getOne(self, id: int) -> UserDTO:
+    async def getOne(self, id: int, email=None) -> UserDTO:
+        user = None
         user = await self.__repository.getOne(id=id)
+        if email and user.email != email:
+            user = None
         return user    
         
     async def getAll(self) -> list[UserDTO]:

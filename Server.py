@@ -7,8 +7,8 @@ import logging
 
 from config.database.DB import init_db
 from config.Config import getSettings
-from routes.user.router import userRouter
 from routes.form.router import formRouter
+
 settings = getSettings()
 
 app = FastAPI(
@@ -25,7 +25,6 @@ app.add_middleware(
 )
 init_db(app)
 
-app.include_router(userRouter)
 app.include_router(formRouter)
 
 config = Config()
