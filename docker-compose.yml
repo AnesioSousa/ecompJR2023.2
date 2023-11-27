@@ -2,17 +2,37 @@ version: '3.5'
 
 services:
   postgres:
-      container_name: postgres
-      image: postgres:latest
-      environment:
-        POSTGRES_USER: admin_ecompjr
-        POSTGRES_PASSWORD: EcompJr123@
-        PGDATA: /data/postgres
+    container_name: postgres
+    image: postgres:latest
+    networks:
+      - desafio_my_network
+    environment:
+      POSTGRES_USER: admin_ecompjr
+      POSTGRES_PASSWORD: EcompJr123@
+      PGDATA: /data/postgres
 
-      volumes:
-        - postgres-db:/data/postgres
-      ports:
-        - "5432:5432"
+    volumes:
+      - postgres-db:/data/postgres
+    ports:
+      - "5432:5432"
+
+  auth_server:
+    container_name: auth_server
+    image: anesiodev/desafio-ecompjr2023.2:auth-server-0.0.1
+    ports:
+      - "3309:3309"
+    networks:
+      - desafio_my_network
+    environment:
+      - SERVER_API_PORT=3307
+      - REFRESH_TOKEN_SECRET=c0d24ee5dcf708dc0004a1f0e390aca8720bb2c7f1e4878b058a1cd7a37056b70130f726321152804e39fa664c564e1621427e97ff801e4e5dd3832a1db1ee0c
+      - ACCESS_TOKEN_SECRET=bdcdbdf616228d81ae19eac9c57e44a644015fc99a4a3155add5982c26e1ea1cd5c9c1f869988b039660c9057b6fbbdcc21378c838ac3827e438d18c0aa901d7
+      - REFRESH_TOKEN_EXPIRATION=60
+      - SERVER_AUTH_PORT=3309
+
+networks:
+  desafio_my_network:
+
 
 volumes:
   postgres-db:

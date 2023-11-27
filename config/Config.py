@@ -19,9 +19,9 @@ class Settings(BaseSettings):
         "models.form.FormModel",
         "aerich.models"
     ]
-    SECRET_KEY: str = config("SECRET_KEY")
-    TOKEN_ALGORITHM: str = config("SECRET_KEY")
-    REGISTRATION_TOKEN_LIFETIME: str = config("REGISTRATION_TOKEN_LIFETIME")
+    ACCESS_TOKEN_SECRET: str = config("ACCESS_TOKEN_SECRET")
+    REFRESH_TOKEN_SECRET: str = config("REFRESH_TOKEN_SECRET")
+    REFRESH_TOKEN_EXPIRATION: str = config("REFRESH_TOKEN_EXPIRATION", default=60)
 
 @lru_cache
 def getSettings() -> Settings:
