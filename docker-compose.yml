@@ -1,8 +1,8 @@
 version: '3.5'
 
 services:
-  postgres:
-    container_name: postgres
+  auth_db:
+    container_name: auth_db
     image: postgres:latest
     networks:
       desafio_my_network:
@@ -35,6 +35,17 @@ services:
       - REFRESH_TOKEN_SECRET=c0d24ee5dcf708dc0004a1f0e390aca8720bb2c7f1e4878b058a1cd7a37056b70130f726321152804e39fa664c564e1621427e97ff801e4e5dd3832a1db1ee0c
       - ACCESS_TOKEN_SECRET=bdcdbdf616228d81ae19eac9c57e44a644015fc99a4a3155add5982c26e1ea1cd5c9c1f869988b039660c9057b6fbbdcc21378c838ac3827e438d18c0aa901d7
       - REFRESH_TOKEN_EXPIRATION=60
+
+  form_db:
+    container_name: form_db
+    image: postgres:latest
+    networks:
+      desafio_my_network:
+        ipv4_address: 192.168.92.8
+    environment:
+      POSTGRES_USER: admin_ecompjr
+      POSTGRES_PASSWORD: EcompJr123@
+      PGDATA: /data/postgres
   
 networks:
   desafio_my_network:

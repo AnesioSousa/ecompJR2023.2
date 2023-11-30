@@ -22,9 +22,14 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_SECRET: str = config("ACCESS_TOKEN_SECRET")
     REFRESH_TOKEN_SECRET: str = config("REFRESH_TOKEN_SECRET")
     REFRESH_TOKEN_EXPIRATION: str = config("REFRESH_TOKEN_EXPIRATION", default=60)
+    SERVER_AUTH_PORT: int = config("SERVER_AUTH_PORT") 
+    SERVER_DATABASE_HOST: str = config("SERVER_DATABASE_HOST")
+    POSTGRES_USER: str = config("POSTGRES_USER")
+    POSTGRES_PASSWORD: str = config("POSTGRES_PASSWORD")
 
 @lru_cache
 def getSettings() -> Settings:
+    """Singleton instance"""
     return Settings()
 
 

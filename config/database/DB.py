@@ -17,7 +17,7 @@ TORTOISE_ORM = {
 def init_db(app: FastAPI) -> None:
     register_tortoise(
         app=app,
-        db_url=settings.DB_URL,
+        db_url=f"postgres://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.SERVER_DATABASE_HOST}:5432/postgres",
         generate_schemas=settings.GENERATE_SCHEMAS,
         modules={"models": settings.MODELS},
         add_exception_handlers=True,
