@@ -50,6 +50,16 @@ The simplest way to test the project is having docker installed, download the do
 <p>Copy the given access token and paste in a estructure like this:</p>
 <img width="350" alt="image" src="https://github.com/AnesioSousa/ecompJR2023.2/assets/39014361/f5f72c98-8c4a-4454-b941-bc72ea422465">
 
+<h1>## distributed architecture</h1>
+
+<h1>## About resources usage of host machine:</h1>
+
+auth-server
+    dockerip: 192.168.92.??
+    port: 3309
+auth-db
+<p>ports: auth-server</p>
+
 ## Technologies
 - FastAPI: Main Framework to API
 - Hypercorn: ASGI Server to allows up the API client
