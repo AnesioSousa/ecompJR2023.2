@@ -5,7 +5,7 @@ from fastapi import FastAPI
 settings = getSettings()
 
 TORTOISE_ORM = {
-    "connections": {"default": settings.DB_URL},
+    "connections": {"default": f"postgres://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.SERVER_DATABASE_HOST}:5432/postgres"},
     "apps": {
         "models": {
             "models": settings.MODELS,

@@ -11,11 +11,8 @@ services:
       POSTGRES_USER: admin_ecompjr
       POSTGRES_PASSWORD: EcompJr123@
       PGDATA: /data/postgres
-
     volumes:
       - postgres-db:/data/postgres
-    ports:
-      - "5432:5432"
 
   auth_server:
     container_name: auth_server
@@ -23,7 +20,8 @@ services:
     ports:
       - "3309:3309"
     depends_on:
-      - postgres
+      - form_db
+      - auth_db
     networks:
       desafio_my_network:
         ipv4_address: 192.168.92.21
@@ -46,7 +44,33 @@ services:
       POSTGRES_USER: admin_ecompjr
       POSTGRES_PASSWORD: EcompJr123@
       PGDATA: /data/postgres
-  
+
+  form_server:
+    container_name: form_server
+    image: anesiodev/desafio-ecompjr2023.2:form-app-0.0.1
+    depends_on:
+      - form_db
+      - auth_db
+      - auth_server
+    networks:
+      desafio_my_network:
+        ipv4_address: 192.168.92.22
+    environment:
+      - APP_NAME = "Landing Page"
+      - APP_DESCRIPTION = "Desafio técnico EcompJr 2023.2"
+      - SERVER_AUTH_PORT=3309
+      - SERVER_DATABASE_HOST=192.168.92.8
+      - POSTGRES_USER=admin_ecompjr
+      - POSTGRES_PASSWORD=EcompJr123@
+      - REFRESH_TOKEN_SECRET=c0d24ee5dcf708dc0004a1f0e390aca8720bb2c7f1e4878b058a1cd7a37056b70130f726321152804e39fa664c564e1621427e97ff801e4e5dd3832a1db1ee0c
+      - ACCESS_TOKEN_SECRET=bdcdbdf616228d81ae19eac9c57e44a644015fc99a4a3155add5982c26e1ea1cd5c9c1f869988b039660c9057b6fbbdcc21378c838ac3827e438d18c0aa901d7
+      - REFRESH_TOKEN_EXPIRATION = 60
+      - REFRESH_TOKEN_SECRET = 123
+      - GENERATE_SCHEMAS = True
+      - APP_PORT = 8080
+    ports:
+      - "8080:8080"
+
 networks:
   desafio_my_network:
     ipam:

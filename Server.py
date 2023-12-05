@@ -29,7 +29,7 @@ app.include_router(formRouter)
 
 config = Config()
 
-config.bind = [f'127.0.0.1:{settings.APP_PORT}']
+config.bind = [f'0.0.0.0:{settings.APP_PORT}']
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("hypercorn")
